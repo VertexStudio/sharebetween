@@ -25,11 +25,6 @@ use humhub\libs\Html;
                             <?= Yii::t('SharebetweenModule.base', 'On space'); ?>
                         </a>
                     </li>
-                    <li class="tab-external">
-                        <a href="#share_profile" data-toggle="tab">
-                            <?= Yii::t('SharebetweenModule.base', 'On your profile'); ?>
-                        </a>
-                    </li>
                 </ul>
             </div>
             <br/>
@@ -61,7 +56,7 @@ use humhub\libs\Html;
                     <?php $form->field($model, 'Spaces_GUIDs')->widget(SpacePickerField::class, ['id' => 'invite'])->label(false);  ?>
 
 
-                        <script <?= Html::nonce() ?>>
+                        <script>
                             // Shake modal after wrong validation
                             <?php if ($model->hasErrors()) : ?>
                                     $('.modal-dialog').removeClass('fadeIn');
@@ -107,33 +102,6 @@ use humhub\libs\Html;
 
                 </div>
                
-                <div class="tab-pane" id="share_profile">
-                    <?php $form = ActiveForm::begin(); ?>
-                    <?= Yii::t('SharebetweenModule.base', 'Share this content directly on your profile.'); ?>
-                    <br/><br/>
-
-                    <div class="modal-footer">
-
-                        <?= \humhub\widgets\AjaxButton::widget([
-                            'label' => Yii::t('SharebetweenModule.base', 'Share'),
-                            'ajaxOptions' => [
-                                'type' => 'POST',
-                                'beforeSend' => new yii\web\JsExpression('function(){ setModalLoader(); }'),
-                                'success' => new yii\web\JsExpression('function(html){ $("#globalModal").html(html); }'),
-                                'url' => yii\helpers\Url::to(['/sharebetween/share/index', 'id' => $content->id, 'self' => 1]),
-                            ],
-                            'htmlOptions' => [
-                                'class' => 'btn btn-primary'
-                            ]
-                        ]);
-                        ?>
-                        <button type="button" class="btn btn-primary"
-                                data-dismiss="modal"><?= Yii::t('SharebetweenModule.base', 'Close'); ?></button>
-
-                        <?php ActiveForm::end(); ?>
-                    </div>
-
-                </div>
                 <?= \humhub\widgets\LoaderWidget::widget(['id' => 'invite-loader', 'cssClass' => 'loader-modal hidden']); ?>
 
             </div>
