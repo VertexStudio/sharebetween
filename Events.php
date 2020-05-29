@@ -41,4 +41,9 @@ class Events extends BaseObject
         }
     }
 
+    public static function onWallEntryAddonInit($event)
+    {
+        return var_dump($event->sender->object);
+    }
+
 }
